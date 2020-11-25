@@ -60,7 +60,7 @@ async def scrape_images(url, dest, client, nursery):
     article = await client.get(url)
     for img in parse_html5(article.text).iterfind('.//img'):
         if img.get('itemprop') == 'contentUrl':
-            nursery.start_soon(download, img, client, dest)
+            nursery.start_soon(download, img, dest, client)
 
 
 async def vnexpress(dest, client, nursery):
