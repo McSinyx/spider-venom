@@ -1,6 +1,6 @@
 from functools import partial
 from os.path import basename, splitext
-from urllib.parse import urldefrag, urlparse
+from urllib.parse import urlparse
 
 from html5lib import parse
 from httpx import ConnectTimeout
