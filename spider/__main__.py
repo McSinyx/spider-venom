@@ -27,8 +27,8 @@ from .tuoitre import tuoitre
 
 async def main(dest):
     """Download vaccine images."""
-    async with AsyncClient() as client, open_nursery() as nursery:       
-        nursery.start_soon(vnexpress, Path(dest), client, nursery)
+    async with AsyncClient() as client, open_nursery() as nursery:
+        nursery.start_soon(tuoitre, Path(dest), client, nursery)
         nursery.start_soon(vnexpress, Path(dest), client, nursery)
 
 

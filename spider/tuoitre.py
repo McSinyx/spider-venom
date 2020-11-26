@@ -13,7 +13,8 @@ parse_html5 = partial(parse, namespaceHTMLElements=False)
 
 def articles(links):
     for a in links:
-        url, fragment = urldefrag(a.get('href'))
+        url = a.get('href')
+        if url is None: continue
         if url.endswith('.htm') and 'vacxin' in url: yield url
 
 
