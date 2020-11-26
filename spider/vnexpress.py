@@ -51,7 +51,7 @@ async def download(img, dest, client):
         return
     async with await open_file(directory/f'image{ext}', 'wb') as fo:
         async for chunk in fi.aiter_bytes(): await fo.write(chunk)
-    await (directory/'caption').write_text(caption)
+    await (directory/'caption').write_text(caption, encoding='utf-8')
     print(caption)
 
 
