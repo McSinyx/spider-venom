@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Scraped images and captions" href="results.html" />
+    <link rel="next" title="Scraped images and their captions" href="results.html" />
     <link rel="prev" title="Scraping vaccine images from Vietnamese news" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -116,8 +116,12 @@ As discussed earlier, these end with <code class="docutils literal notranslate">
     <span class="sd">&quot;&quot;&quot;Download vaccine images from the given VnExpress article.&quot;&quot;&quot;</span>
     <span class="n">article</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">parse_html5</span><span class="p">(</span><span class="n">article</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">iterfind</span><span class="p">(</span><span class="s1">&#39;.//img&#39;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;itemprop&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;contentUrl&#39;</span><span class="p">:</span>
-            <span class="n">nursery</span><span class="o">.</span><span class="n">start_soon</span><span class="p">(</span><span class="n">download</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">client</span><span class="p">)</span>
+        <span class="n">caption</span><span class="p">,</span> <span class="n">url</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alt&#39;</span><span class="p">),</span> <span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data-src&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">caption</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s1">&#39;vaccine&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">caption</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="k">continue</span>
+        <span class="c1"># VnExpress gives different HTML depending on the client.</span>
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">url</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;logo.svg&#39;</span><span class="p">):</span> <span class="k">continue</span>
+        <span class="n">nursery</span><span class="o">.</span><span class="n">start_soon</span><span class="p">(</span><span class="n">download</span><span class="p">,</span> <span class="n">caption</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">client</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">async</span></code> function <code class="docutils literal notranslate"><span class="pre">download</span></code> takes care of the rest of the work,
@@ -126,10 +130,8 @@ namely fetching and putting the images and caption in the specified location:</p
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
 <span class="kn">from</span> <span class="nn">trio</span> <span class="kn">import</span> <span class="n">open_file</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">caption</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Save the given image with caption if it&#39;s about vaccine.&quot;&quot;&quot;</span>
-    <span class="n">caption</span><span class="p">,</span> <span class="n">url</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alt&#39;</span><span class="p">),</span> <span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data-src&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;vaccine&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">caption</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="k">return</span>
     <span class="n">name</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
     <span class="n">directory</span> <span class="o">=</span> <span class="n">dest</span> <span class="o">/</span> <span class="n">name</span>
     <span class="k">await</span> <span class="n">directory</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -168,7 +170,7 @@ namely fetching and putting the images and caption in the specified location:</p
 <li class="toctree-l2"><a class="reference internal" href="#scraper-construction">Scraper construction</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">Scraped images and captions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Scraped images and their captions</a></li>
 </ul>
 
 <div class="relations">
@@ -176,7 +178,7 @@ namely fetching and putting the images and caption in the specified location:</p
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">Scraping vaccine images from Vietnamese news</a></li>
-      <li>Next: <a href="results.html" title="next chapter">Scraped images and captions</a></li>
+      <li>Next: <a href="results.html" title="next chapter">Scraped images and their captions</a></li>
   </ul></li>
 </ul>
 </div>
