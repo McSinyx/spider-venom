@@ -1,4 +1,4 @@
-# VnExpress vaccine image scraper
+# tuoitre vaccine image scraper
 # Copyright (C) 2020  Phí Đỗ Hải Long
 #
 # This file is part of Spider Venom.
