@@ -13,14 +13,15 @@ parse_html5 = partial(parse, namespaceHTMLElements=False)
 
 def articles(links):
     for a in links:
-        url = a.get('href')
-        if url is None: continue
-        if url.endswith('.htm') and 'vacxin' in url: yield url
+        href = a.get('href')
+        if href is None: continue
+        url = 'http://tuoitre.vn' + href
+        if url.endswith('.htm') and 'vac' in url: yield url
 
 
 async def download(img, dest, client):
-    caption, url = img.get('alt'), img.get('data-src')
-    if 'vaccine' not in caption.lower(): return
+    caption, url = img.get('alt'), img.get('src')
+    if 'vac' not in caption.lower(): return
     name, ext = splitext(basename(urlparse(url).path))
     directory = dest / name
     await directory.mkdir(parents=True, exist_ok=True)
@@ -38,7 +39,7 @@ async def download(img, dest, client):
 async def scrape_images(url, dest, client, nursery):
     article = await client.get(url)
     for img in parse_html5(article.text).iterfind('.//img'):
-        if img.get('itemprop') == 'contentUrl':
+        if img.get('type') == 'photo':
             nursery.start_soon(download, img, dest, client)
 
 
