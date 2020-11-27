@@ -21,7 +21,6 @@ def articles(links):
 
 async def download(img, dest, client):
     caption, url = img.get('alt'), img.get('src')
-    if 'vac' not in caption.lower(): return
     name, ext = splitext(basename(urlparse(url).path))
     directory = dest / name
     await directory.mkdir(parents=True, exist_ok=True)
