@@ -97,14 +97,6 @@ Scraped images and their captions
 
    .. include:: venom/vnexpress/7360-1606191821-1606191880-8695-1606192004/caption
 
-.. figure:: venom/vnexpress/28VIRUS-MODERNA-jumbo-3-2856-1605582590/image.jpg
-
-   .. include:: venom/vnexpress/28VIRUS-MODERNA-jumbo-3-2856-1605582590/caption
-
-.. figure:: venom/vnexpress/download-13-jpeg-1605534666-9692-1605534740/image.jpg
-
-   .. include:: venom/vnexpress/download-13-jpeg-1605534666-9692-1605534740/caption
-
 .. figure:: venom/vnexpress/tnv-Oxford1-4059-1606185937/image.jpg
 
    .. include:: venom/vnexpress/tnv-Oxford1-4059-1606185937/caption
@@ -165,10 +157,6 @@ Scraped images and their captions
 
    .. include:: venom/vnexpress/merlin-179776443-9bd3db53-09da-1812-7608-1605771710/caption
 
-.. figure:: venom/vnexpress/merlin-179916549-77274b9d-a222-1534-5686-1605582590/image.jpg
-
-   .. include:: venom/vnexpress/merlin-179916549-77274b9d-a222-1534-5686-1605582590/caption
-
 .. figure:: venom/vnexpress/2020-11-09t000000z-735079080-m-3255-1839-1605708633/image.jpg
 
    .. include:: venom/vnexpress/2020-11-09t000000z-735079080-m-3255-1839-1605708633/caption
@@ -213,6 +201,10 @@ Scraped images and their captions
 
    .. include:: venom/vnexpress/sdfhgsdhsgh-png-1606212720-3393-1606212835/caption
 
+.. figure:: venom/vnexpress/gsdfhdfhfj-png-1606711292-2933-1606711645/image.png
+
+   .. include:: venom/vnexpress/gsdfhdfhfj-png-1606711292-2933-1606711645/caption
+
 .. figure:: venom/vnexpress/2020-10-30T210259Z-392434681-R-5664-9655-1605748111/image.jpg
 
    .. include:: venom/vnexpress/2020-10-30T210259Z-392434681-R-5664-9655-1605748111/caption
@@ -220,6 +212,10 @@ Scraped images and their captions
 .. figure:: venom/vnexpress/126140804-443425593717020-3037-1120-5387-1606189405/image.jpg
 
    .. include:: venom/vnexpress/126140804-443425593717020-3037-1120-5387-1606189405/caption
+
+.. figure:: venom/vnexpress/128540063-1975748409226276-409-4011-5510-1606703046/image.png
+
+   .. include:: venom/vnexpress/128540063-1975748409226276-409-4011-5510-1606703046/caption
 
 .. figure:: venom/vnexpress/vaccine-oxford-7537-1606207139/image.jpg
 
