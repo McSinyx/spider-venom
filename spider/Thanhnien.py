@@ -48,4 +48,3 @@ async def thanhnien(dest, client, nursery):
     for url in set(articles(parse_html5(index.text).iterfind('.//a'))):
         nursery.start_soon(scrape_images, url, dest/'thanhnien',
                            client, nursery)
-        
