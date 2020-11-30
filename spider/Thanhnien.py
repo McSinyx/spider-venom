@@ -19,7 +19,6 @@ def articles(links):
         url = 'https://thanhnien.vn/' + href
         if url.endswith('.htm') and 'vac' in url: yield url
 
-
 async def download(img, dest, client):
     """The image saved if contain information about vaccine"""
     caption, url = img.get('alt'), img.get('src')
@@ -36,7 +35,6 @@ async def download(img, dest, client):
     await (directory/'caption').write_text(caption, encoding='utf-8')
     print(caption)
 
-
 async def scrape_images(url, dest, client, nursery):
     """search then download image from the articles."""
     article = await client.get(url)
@@ -50,3 +48,4 @@ async def thanhnien(dest, client, nursery):
     for url in set(articles(parse_html5(index.text).iterfind('.//a'))):
         nursery.start_soon(scrape_images, url, dest/'thanhnien',
                            client, nursery)
+        
