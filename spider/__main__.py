@@ -23,6 +23,7 @@ from trio import Path, open_nursery, run
 
 from .tuoitre import tuoitre
 from .vnexpress import vnexpress
+from .thanhnien import thanhnien
 
 
 async def main(dest):
@@ -30,6 +31,7 @@ async def main(dest):
     async with AsyncClient() as client, open_nursery() as nursery:
         nursery.start_soon(tuoitre, Path(dest), client, nursery)
         nursery.start_soon(vnexpress, Path(dest), client, nursery)
+        nursery.start_soon(thanhnien, Path(dest), client, nursery)
 
 
 if __name__ == '__main__':
