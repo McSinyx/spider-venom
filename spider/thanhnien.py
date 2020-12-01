@@ -6,7 +6,7 @@ from html5lib import parse
 from httpx import ConnectTimeout
 from trio import open_file
 
-INDEX = 'https://thanhnien.vn/vac-xin-covid-19'
+INDEX = 'https://thanhnien.vn/vaccine/'
 
 parse_html5 = partial(parse, namespaceHTMLElements=False)
 
@@ -16,12 +16,11 @@ def articles(links):
     for a in links:
         href = a.get('href')
         if href is None: continue
-        url = 'https://thanhnien.vn/' + href
-        if url.endswith('.htm') and 'vac' in url: yield url
+        url = 'http://thanhnien.vn/' + href
+        if url.endswith('.html') and 'vac' in url: yield url
 
 async def download(img, dest, client):
-    """The image saved if contain information about vaccine"""
-    caption, url = img.get('alt'), img.get('src')
+    """The image and caption saved if contain information about vaccine"""
     name, ext = splitext(basename(urlparse(url).path))
     directory = dest / name
     await directory.mkdir(parents=True, exist_ok=True)
@@ -36,11 +35,14 @@ async def download(img, dest, client):
     print(caption)
 
 async def scrape_images(url, dest, client, nursery):
-    """search then download image from the articles."""
+    """Search for img in the articles in order to download the images."""
     article = await client.get(url)
     for img in parse_html5(article.text).iterfind('.//img'):
-        if img.get('type') == 'photo':
-            nursery.start_soon(download, img, dest, client)
+        caption, url = img.get('alt'), img.get('data-src')
+        if caption is None or 'vac' not in caption.lower(): continue
+        if url is None: url = img.get('src')
+        if url.endswith('logo.svg'): continue
+        nursery.start_soon(download, caption, url, dest, client)
 
 async def thanhnien(dest, client, nursery):
     """scrape image and captions optain from link."""
