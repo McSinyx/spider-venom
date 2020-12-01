@@ -22,9 +22,9 @@ from httpx import AsyncClient
 from trio import Path, open_nursery, run
 
 
-from tuoitre import tuoitre
-from vnexpress import vnexpress
-from dantri import dantri
+from .tuoitre import tuoitre
+from .vnexpress import vnexpress
+from .dantri import dantri
 
 
 async def main(dest):
