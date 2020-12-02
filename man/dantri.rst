@@ -13,7 +13,7 @@ The href provided in ``<a>`` can't directly link to the articles, some ``<a>`` h
 .. code-block:: html
 
    <figure class="image align-center" contenteditable="false">
-   <img title="Bill Gates dự đoán tới hết năm 2022 dịch Covid-19 mớii chấm dứt - 1" src="https://icdn.dantri.com.vn/thumb_w/640/2020/08/11/covid-1597127036692.jpg" 
+   <img title="Bill Gates dự đoán tới hết năm 2022 dịch Covid-19 mới chấm dứt - 1" src="https://icdn.dantri.com.vn/thumb_w/640/2020/08/11/covid-1597127036692.jpg" 
         alt="Bill Gates dự đoán tới hết năm 2022 dịch Covid-19 mới chấm dứt - 1" data-width="800" data-height="450"data-original="https://icdn.dantri.com.vn/2020/08/11/covid-1597127036692.jpg" data-photo-id="1034257" />
 
 
