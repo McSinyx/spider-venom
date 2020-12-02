@@ -1,10 +1,6 @@
 Scraped images and their captions
 =================================
 
-.. figure:: venom/thanhnien/thucpham_rngr/image.jpg
-
-   .. include:: venom/thanhnien/thucpham_rngr/caption
-
 .. figure:: venom/thanhnien/vaccine-aids_yyne/image.jpg
 
    .. include:: venom/thanhnien/vaccine-aids_yyne/caption
@@ -21,17 +17,9 @@ Scraped images and their captions
 
    .. include:: venom/thanhnien/tiem/caption
 
-.. figure:: venom/thanhnien/onhiem_ctzb/image.jpg
-
-   .. include:: venom/thanhnien/onhiem_ctzb/caption
-
 .. figure:: venom/thanhnien/vaccinecovid19_rpfg/image.jpg
 
    .. include:: venom/thanhnien/vaccinecovid19_rpfg/caption
-
-.. figure:: venom/thanhnien/khambenhnhan-nd1000-1_tkby/image.jpg
-
-   .. include:: venom/thanhnien/khambenhnhan-nd1000-1_tkby/caption
 
 .. figure:: venom/thanhnien/hiv-r-d1/image.jpg
 
