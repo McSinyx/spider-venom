@@ -76,7 +76,7 @@ This code will download the image from ``src`` and the caption from ``alt``. Fir
 scrape_images()
 ^^^^^^^^^^^^^^^
 
-.. code_block:: python
+.. code-block:: python
 
    async def scrape_images(url, dest, client, nursery):
        """Download vaccine images from the given Dantri article."""

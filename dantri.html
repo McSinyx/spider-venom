@@ -96,6 +96,20 @@
 </div>
 <div class="section" id="scrape-images">
 <h3>scrape_images()<a class="headerlink" href="#scrape-images" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">scrape_images</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">nursery</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Download vaccine images from the given Dantri article.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">article</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConnectError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">parse_html5</span><span class="p">(</span><span class="n">article</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">iterfind</span><span class="p">(</span><span class="s1">&#39;.//img&#39;</span><span class="p">):</span>
+        <span class="n">caption</span><span class="p">,</span> <span class="n">url</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alt&#39;</span><span class="p">),</span> <span class="n">img</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">caption</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">continue</span>
+        <span class="k">if</span> <span class="s1">&#39;vac&#39;</span> <span class="ow">in</span> <span class="n">caption</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;vắc&#39;</span> <span class="ow">in</span> <span class="n">caption</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">nursery</span><span class="o">.</span><span class="n">start_soon</span><span class="p">(</span><span class="n">download</span><span class="p">,</span> <span class="n">caption</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">client</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>First, I try to get url of article from client, except Connection is error then i show the url. The appropriate urls are then fetched and parsed in order to find all the <code class="docutils literal notranslate"><span class="pre">&lt;img&gt;</span></code> tags available as <em>vac</em> and <em>vắc</em>.</p>
 </div>
 </div>
