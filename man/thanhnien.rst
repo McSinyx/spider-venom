@@ -56,8 +56,9 @@ scrape_image()
            if url.endswith('logo.svg'): continue
            nursery.start_soon(download, caption, url, dest, client)
 				
-The website used in vietnamese languages so we use both key words as 'vac' and 'vắc' for either vaccine
-and vắc xin.
+The website used in vietnamese languages so we use both key words as *vac* and *vắc* for either *vaccine*
+and *vắc xin*.
+
 
 download()
 ^^^^^^^^^^
@@ -80,5 +81,5 @@ download()
        print(caption)
 	
 The download function will download the image from ``src`` and the caption from ``alt``.
-Each image and its caption is  list on in folder and named "image", "caption" respectively inside a folder named by
+Each image and its caption is list on in folder and named ``image``, ``caption`` respectively inside a folder named by
 the name of the website
