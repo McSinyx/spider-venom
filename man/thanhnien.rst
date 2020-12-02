@@ -38,7 +38,7 @@ articles()
            url = 'http://thanhnien.vn/' + href
            if url.endswith('.html') and 'vac' in url: yield url
 		
-From searched articles we focus only on url ended with htm and vac in the caption and image
+From searched articles we focus only on url ended with htm and vac in the caption and image.
 
 scrape_image()
 ^^^^^^^^^^^^^^
@@ -58,7 +58,6 @@ scrape_image()
 				
 The website used in vietnamese languages so we use both key words as *vac* and *vắc* for either *vaccine*
 and *vắc xin*.
-
 
 download()
 ^^^^^^^^^^
@@ -82,4 +81,4 @@ download()
 	
 The download function will download the image from ``src`` and the caption from ``alt``.
 Each image and its caption is list on in folder and named ``image``, ``caption`` respectively inside a folder named by
-the name of the website
+the name of the website.
