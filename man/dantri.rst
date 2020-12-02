@@ -12,27 +12,30 @@ The href provided in ``<a>`` can't directly link to the articles, some ``<a>`` h
 
 ..code-block:: html
 
-<figure class="image align-center" contenteditable="false">
-<img title="Bill Gates d? ?oán t?i h?t n?m 2022 d?ch Covid-19 m?i ch?m d?t - 1" src="https://icdn.dantri.com.vn/thumb_w/640/2020/08/11/covid-1597127036692.jpg" 
-alt="Bill Gates d? ?oán t?i h?t n?m 2022 d?ch Covid-19 m?i ch?m d?t - 1" data-width="800" data-height="450"data-original="https://icdn.dantri.com.vn/2020/08/11/covid-1597127036692.jpg" data-photo-id="1034257" />
+   <figure class="image align-center" contenteditable="false">
+   <img title="Bill Gates d? ?oï¿½n t?i h?t n?m 2022 d?ch Covid-19 m?i ch?m d?t - 1" src="https://icdn.dantri.com.vn/thumb_w/640/2020/08/11/covid-1597127036692.jpg" 
+        alt="Bill Gates d? ?oï¿½n t?i h?t n?m 2022 d?ch Covid-19 m?i ch?m d?t - 1" data-width="800" data-height="450"data-original="https://icdn.dantri.com.vn/2020/08/11/covid-1597127036692.jpg" data-photo-id="1034257" />
 
-For the images and captions in the articles, we will get the ``src`` ---image source and ``alt`` tag
+
+For the images and captions in the articles, we will get the ``src``---image source and ``alt`` tag.
+
 
 Scraping Explaination
 ---------------------
 
 Define the site as :
 
-..code-block:: python
+.. code-block:: python
 
   INDEX = 'https://dantri.com.vn/vaccine.tag'
 
-The scraper will be focused on three main functions download(), scrape_images() and articles()
+The scraper will be focused on three main functions ``download()``, ``scrape_images()`` and ``articles()``.
+
 
 Articles()
 ^^^^^^^^^^
 
-..code-block:: python
+.. code-block:: python
 
   def articles(links):
     """Search for URLs contains 'vacxin' in the given link."""
