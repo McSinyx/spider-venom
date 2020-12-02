@@ -21,9 +21,9 @@ from sys import argv
 from httpx import AsyncClient
 from trio import Path, open_nursery, run
 
+from .thanhnien import thanhnien
 from .tuoitre import tuoitre
 from .vnexpress import vnexpress
-from .thanhnien import thanhnien
 
 
 async def main(dest):
