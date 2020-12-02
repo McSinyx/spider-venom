@@ -34,7 +34,7 @@ def articles(links):
         href = a.get('href')
         if href is None: continue
         if href.startswith('http'):
-	        url = href	
+            url = href
         else:
             url = 'https://dantri.com.vn' + href
         if url.endswith('.htm') and 'vac' in url:
