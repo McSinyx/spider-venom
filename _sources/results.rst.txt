@@ -37,6 +37,26 @@ Scraped images and their captions
 
    .. include:: venom/thanhnien/hiv-r-d1/caption
 
+.. figure:: venom/dantri/3tre.3-421ec/image.JPG
+
+   .. include:: venom/dantri/3tre.3-421ec/caption
+
+.. figure:: venom/dantri/vacxin-25413-79a7a/image.jpg
+
+   .. include:: venom/dantri/vacxin-25413-79a7a/caption
+
+.. figure:: venom/dantri/benh-nhi-12214-9e46c/image.jpg
+
+   .. include:: venom/dantri/benh-nhi-12214-9e46c/caption
+
+.. figure:: venom/dantri/ungthu-1-1578910065869/image.png
+
+   .. include:: venom/dantri/ungthu-1-1578910065869/caption
+
+.. figure:: venom/dantri/54-baidich-2-huongvudocx-1586015582421/image.jpeg
+
+   .. include:: venom/dantri/54-baidich-2-huongvudocx-1586015582421/caption
+
 .. figure:: venom/tuoitre/photo-1-16038675759312109833464/image.jpg
 
    .. include:: venom/tuoitre/photo-1-16038675759312109833464/caption
