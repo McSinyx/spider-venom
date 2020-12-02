@@ -13,8 +13,8 @@ The href provided in ``<a>`` can't directly link to the articles, some ``<a>`` h
 ..code-block:: html
 
    <figure class="image align-center" contenteditable="false">
-   <img title="Bill Gates d? ?o�n t?i h?t n?m 2022 d?ch Covid-19 m?i ch?m d?t - 1" src="https://icdn.dantri.com.vn/thumb_w/640/2020/08/11/covid-1597127036692.jpg" 
-        alt="Bill Gates d? ?o�n t?i h?t n?m 2022 d?ch Covid-19 m?i ch?m d?t - 1" data-width="800" data-height="450"data-original="https://icdn.dantri.com.vn/2020/08/11/covid-1597127036692.jpg" data-photo-id="1034257" />
+   <img title="Bill Gates dự đoán tới hết năm 2022 dịch Covid-19 mớii chấm dứt - 1" src="https://icdn.dantri.com.vn/thumb_w/640/2020/08/11/covid-1597127036692.jpg" 
+        alt="Bill Gates dự đoán tới hết năm 2022 dịch Covid-19 mới chấm dứt - 1" data-width="800" data-height="450"data-original="https://icdn.dantri.com.vn/2020/08/11/covid-1597127036692.jpg" data-photo-id="1034257" />
 
 
 For the images and captions in the articles, we will get the ``src``---image source and ``alt`` tag.
@@ -37,58 +37,58 @@ Articles()
 
 .. code-block:: python
 
-  def articles(links):
-    """Search for URLs contains 'vacxin' in the given link."""
-    for a in links:
-        href = a.get('href')
-        if href is None: continue
-        if href.startswith('http'):
-	        url = href	
-        else:
-            url = 'https://dantri.com.vn' + href
-        if url.endswith('.htm') and 'vac' in url:
-            yield url
+   def articles(links):
+       """Search for URLs contains 'vacxin' in the given link."""
+       for a in links:
+           href = a.get('href')
+           if href is None: continue
+           if href.startswith('http'):
+               url = href	
+           else:
+               url = 'https://dantri.com.vn' + href
+           if url.endswith('.htm') and 'vac' in url:
+               yield url
 
 ``<a>`` tags try to get the href attribute of each ``<a>`` tag. Since some ``<a>`` don't have an href attribute, we will ignore if href returns None. To make href a recognized url, we add ``http://dantri.com.vn`` in advance href. If href start with ``http``, we add url as href else we add url in advance href  .Finally, to get vaccine-relevant articles, we just get the end of the url with ``.htm`` and contains ``vac``.
 
 Download()
 ^^^^^^^^^^
 
-..code-block:: python
+.. code-block:: python
 
-  async def download(caption, url, dest, client):
-    """Save the given image with caption if it's about vaccine."""
-    name, ext = splitext(basename(url))
-    directory = dest / name
-    await directory.mkdir(parents=True, exist_ok=True)
+   async def download(caption, url, dest, client):
+       """Save the given image with caption if it's about vaccine."""
+       name, ext = splitext(basename(url))
+       directory = dest / name
+       await directory.mkdir(parents=True, exist_ok=True)
 
-    try:
-        fi = await client.get(url)
-    except ConnectTimeout:
-        return
-    async with await open_file(directory/f'image{ext}', 'wb') as fo:
-        async for chunk in fi.aiter_bytes(): await fo.write(chunk)
-    await (directory/'caption').write_text(caption, encoding='utf-8')
-    print(caption)
+       try:
+           fi = await client.get(url)
+       except ConnectTimeout:
+           return
+       async with await open_file(directory/f'image{ext}', 'wb') as fo:
+           async for chunk in fi.aiter_bytes(): await fo.write(chunk)
+       await (directory/'caption').write_text(caption, encoding='utf-8')
+       print(caption)
 
 This code will download the image from ``src`` and the caption from ``alt``. First i use ``name, ext = splitext(basename(url))`` to split url to find image name and extension. Then each image and its caption is then put in the same folder.
 
 Scrape_images()
 ^^^^^^^^^^^^^^^
 
-..code_block:: python
+.. code_block:: python
 
-  async def scrape_images(url, dest, client, nursery):
-    """Download vaccine images from the given VnExpress article."""
-    try:
-        article = await client.get(url)
-    except ConnectError:
-        print(url)
-        return
-    for img in parse_html5(article.text).iterfind('.//img'):
-        caption, url = img.get('alt'), img.get('src')
-        if caption is None: continue
-        if 'vac' in caption.lower() or 'v?c' in caption.lower():
-            nursery.start_soon(download, caption, url, dest, client)
+   async def scrape_images(url, dest, client, nursery):
+       """Download vaccine images from the given VnExpress article."""
+       try:
+           article = await client.get(url)
+       except ConnectError:
+           print(url)
+           return
+       for img in parse_html5(article.text).iterfind('.//img'):
+           caption, url = img.get('alt'), img.get('src')
+           if caption is None: continue
+           if 'vac' in caption.lower() or 'vắc' in caption.lower():
+               nursery.start_soon(download, caption, url, dest, client)
 
-First, I try to get url of article from client, except Connection is error then i show the url. The appropriate urls are then fetched and parsed in order to find all the ``<img>`` tags available as `vac` and `v?c`. 
+First, I try to get url of article from client, except Connection is error then i show the url. The appropriate urls are then fetched and parsed in order to find all the ``<img>`` tags available as `vac` and `vắc`. 
