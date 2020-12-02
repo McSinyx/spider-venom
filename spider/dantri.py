@@ -58,7 +58,7 @@ async def download(caption, url, dest, client):
 
 
 async def scrape_images(url, dest, client, nursery):
-    """Download vaccine images from the given VnExpress article."""
+    """Download vaccine images from the given Dantri article."""
     try:
         article = await client.get(url)
     except ConnectError:
