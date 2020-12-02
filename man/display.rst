@@ -13,7 +13,7 @@ Then, as we include images and captions in these figures, through these function
 
       .. include:: venom/thanhnien/hiv-r-d1/photo-1-16038675759312109833464/caption
 
-Will provide html source code as:
+Will provide html source code as::
 
    <div class="figure align-default" id="id1">
      <img alt="_images/image.jpg" src="_images/image.jpg" />
@@ -34,3 +34,7 @@ Where::
       .. include:: {}
 
 We will pick the image and caption inside the accessed folder for the figure. After that, we will make a formatted figure. Then when they are generated, they will be aligned and the caption will be joined underneath the image.
+
+The results can be viewed on `the result page`__.
+
+__ https://mcsinyx.github.io/spider-venom/results.html
