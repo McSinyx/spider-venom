@@ -19,7 +19,7 @@ def articles(links):
         url = 'http://thanhnien.vn/' + href
         if url.endswith('.html') and 'vac' in url: yield url
 
-async def download(img, dest, client):
+async def download(caption, url, dest, client):
     """The image and caption saved if contain information about vaccine"""
     name, ext = splitext(basename(urlparse(url).path))
     directory = dest / name
