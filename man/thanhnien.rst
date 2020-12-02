@@ -40,7 +40,6 @@ articles()
 		
 From searched articles we focus only on url ended with htm and vac in the caption and image
 
-
 scrape_image()
 ^^^^^^^^^^^^^^
 
