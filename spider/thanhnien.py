@@ -46,6 +46,7 @@ async def scrape_images(url, dest, client, nursery):
         if url is None: url = img.get('src')
         if url.endswith('logo.svg'): continue
         nursery.start_soon(download, caption, url, dest, client)
+        break
 
 
 async def thanhnien(dest, client, nursery):
