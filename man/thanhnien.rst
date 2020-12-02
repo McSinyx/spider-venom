@@ -16,7 +16,7 @@ For the images and their captions in the articles, we will try to get the ``src`
 Scraping explanation
 --------------------
 
-The site taken is site for searched for vaccine in thanhnien.vn
+The site taken is site for searched for vaccine in thanhnien.vn.
 
 .. code-block:: python
 
