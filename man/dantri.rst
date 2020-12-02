@@ -91,4 +91,4 @@ Scrape_images()
            if 'vac' in caption.lower() or 'vắc' in caption.lower():
                nursery.start_soon(download, caption, url, dest, client)
 
-First, I try to get url of article from client, except Connection is error then i show the url. The appropriate urls are then fetched and parsed in order to find all the ``<img>`` tags available as `vac` and `vắc`. 
+First, I try to get url of article from client, except Connection is error then i show the url. The appropriate urls are then fetched and parsed in order to find all the ``<img>`` tags available as *vac* and *vắc*. 
