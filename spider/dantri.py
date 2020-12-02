@@ -18,7 +18,6 @@
 
 from functools import partial
 from os.path import basename, splitext
-from urllib.parse import urldefrag, urlparse
 
 from html5lib import parse
 from httpx import ConnectError, ConnectTimeout
@@ -40,9 +39,7 @@ def articles(links):
             url = 'https://dantri.com.vn' + href
         if url.endswith('.htm') and 'vac' in url:
             yield url
-            
-        
-    
+
 
 async def download(caption, url, dest, client):
     """Save the given image with caption if it's about vaccine."""
@@ -72,7 +69,6 @@ async def scrape_images(url, dest, client, nursery):
         if caption is None: continue
         if 'vac' in caption.lower() or 'vắc' in caption.lower():
             nursery.start_soon(download, caption, url, dest, client)
-
 
 
 async def dantri(dest, client, nursery):
