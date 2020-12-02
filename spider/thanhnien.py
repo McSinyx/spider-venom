@@ -39,7 +39,8 @@ async def scrape_images(url, dest, client, nursery):
     article = await client.get(url)
     for img in parse_html5(article.text).iterfind('.//img'):
         caption, url = img.get('alt'), img.get('data-src')
-        if caption is None or 'vac' not in caption.lower(): continue
+        if caption is None or ('vắc') not in caption.lower(): 
+           if caption is None or ('vac') not in caption.lower(): continue
         if url is None: url = img.get('src')
         if url.endswith('logo.svg'): continue
         nursery.start_soon(download, caption, url, dest, client)
