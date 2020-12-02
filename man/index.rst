@@ -6,5 +6,6 @@ Scraping vaccine images from Vietnamese news
 
    vnexpress
    tuoitre
+   thanhnien
    display
    results
