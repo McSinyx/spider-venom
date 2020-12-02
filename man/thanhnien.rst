@@ -4,24 +4,24 @@ Scraping vaccine images from tuoitre
 Site analysis
 -------------
 
-We scrape image and caption about vaccine from searched page from thanhnien.vn :
+We scrape image and caption about vaccine from searched page from thanhnien.vn:
+
 
 .. code-block:: html
 
    https://thanhnien.vn/vaccine
 
-
-For the images and their captions in the articles, we will try to get the ``src`` ---image source and 
-``alt`` ---image caption of the ``<img>`` tag. 
+For the images and their captions in the articles, we will try to get the ``src``---image source and 
+``alt``---image caption of the ``<img>`` tag. 
 
 Scraping explanation
 --------------------
 
 The site taken is site for searched for vaccine in thanhnien.vn
+
 .. code-block:: python
 
    INDEX = 'https://thannien.vn/vaccine'
-	
 	
 The scraper then focuses on 3 main functions articles(), scrape_image() and download() and one function
 name thanhnien to run the function from main.py.
