@@ -11,5 +11,6 @@ The procedure and the results are documented as follows
    vnexpress
    tuoitre
    thanhnien
+   dantri
    display
    results
