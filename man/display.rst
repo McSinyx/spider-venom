@@ -32,6 +32,7 @@ Where::
    .. figure:: {}
 
       .. include:: {}
+   """
 
 We will pick the image and caption inside the accessed folder for the figure. After that, we will make a formatted figure. Then when they are generated, they will be aligned and the caption will be joined underneath the image.
 
