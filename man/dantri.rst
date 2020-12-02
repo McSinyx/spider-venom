@@ -10,7 +10,7 @@ The site I used to work with to get the articles, download and scrape images abo
 
 The href provided in ``<a>`` can't directly link to the articles, some ``<a>`` have none of href attribute and some ``<a>`` have href start with http. For example:
 
-..code-block:: html
+.. code-block:: html
 
    <figure class="image align-center" contenteditable="false">
    <img title="Bill Gates dự đoán tới hết năm 2022 dịch Covid-19 mớii chấm dứt - 1" src="https://icdn.dantri.com.vn/thumb_w/640/2020/08/11/covid-1597127036692.jpg" 
@@ -32,7 +32,7 @@ Define the site as :
 The scraper will be focused on three main functions ``download()``, ``scrape_images()`` and ``articles()``.
 
 
-Articles()
+articles()
 ^^^^^^^^^^
 
 .. code-block:: python
@@ -51,7 +51,7 @@ Articles()
 
 ``<a>`` tags try to get the href attribute of each ``<a>`` tag. Since some ``<a>`` don't have an href attribute, we will ignore if href returns None. To make href a recognized url, we add ``http://dantri.com.vn`` in advance href. If href start with ``http``, we add url as href else we add url in advance href  .Finally, to get vaccine-relevant articles, we just get the end of the url with ``.htm`` and contains ``vac``.
 
-Download()
+download()
 ^^^^^^^^^^
 
 .. code-block:: python
@@ -71,15 +71,15 @@ Download()
        await (directory/'caption').write_text(caption, encoding='utf-8')
        print(caption)
 
-This code will download the image from ``src`` and the caption from ``alt``. First i use ``name, ext = splitext(basename(url))`` to split url to find image name and extension. Then each image and its caption is then put in the same folder.
+This code will download the image from ``src`` and the caption from ``alt``. First I use ``name, ext = splitext(basename(url))`` to split url to find image name and extension. Then each image and its caption is then put in the same folder.
 
-Scrape_images()
+scrape_images()
 ^^^^^^^^^^^^^^^
 
 .. code_block:: python
 
    async def scrape_images(url, dest, client, nursery):
-       """Download vaccine images from the given VnExpress article."""
+       """Download vaccine images from the given Dantri article."""
        try:
            article = await client.get(url)
        except ConnectError:
