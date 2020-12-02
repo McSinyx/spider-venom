@@ -38,7 +38,7 @@ articles()
            url = 'http://thanhnien.vn/' + href
            if url.endswith('.html') and 'vac' in url: yield url
 		
-From searched articles we focus only on url ended with htm and vac in the caption and image.
+From searched articles we focus only on url ended with html and vac in the url.
 
 scrape_image()
 ^^^^^^^^^^^^^^
