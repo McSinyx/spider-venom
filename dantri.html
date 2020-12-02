@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scraping vaccine images from Dantri &#8212; spider-venom  documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="scraping-vaccine-images-from-dantri">
+<h1>Scraping vaccine images from Dantri<a class="headerlink" href="#scraping-vaccine-images-from-dantri" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="site-analysis">
+<h2>Site analysis<a class="headerlink" href="#site-analysis" title="Permalink to this headline">¶</a></h2>
+<p>The site I used to work with to get the articles, download and scrape images about vaccine is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dantri</span><span class="o">.</span><span class="n">com</span><span class="o">.</span><span class="n">vn</span><span class="o">/</span><span class="n">vaccine</span><span class="o">.</span><span class="n">tag</span>
+</pre></div>
+</div>
+<p>The href provided in <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> can’t directly link to the articles, some <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> have none of href attribute and some <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> have href start with http. For example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">figure</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;image align-center&quot;</span> <span class="na">contenteditable</span><span class="o">=</span><span class="s">&quot;false&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">img</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Bill Gates dự đoán tới hết năm 2022 dịch Covid-19 mới chấm dứt - 1&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://icdn.dantri.com.vn/thumb_w/640/2020/08/11/covid-1597127036692.jpg&quot;</span>
+     <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Bill Gates dự đoán tới hết năm 2022 dịch Covid-19 mới chấm dứt - 1&quot;</span> <span class="na">data-width</span><span class="o">=</span><span class="s">&quot;800&quot;</span> <span class="na">data-height</span><span class="o">=</span><span class="s">&quot;450&quot;</span><span class="na">data-original</span><span class="o">=</span><span class="s">&quot;https://icdn.dantri.com.vn/2020/08/11/covid-1597127036692.jpg&quot;</span> <span class="na">data-photo-id</span><span class="o">=</span><span class="s">&quot;1034257&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>For the images and captions in the articles, we will get the <code class="docutils literal notranslate"><span class="pre">src</span></code>—image source and <code class="docutils literal notranslate"><span class="pre">alt</span></code> tag.</p>
+</div>
+<div class="section" id="scraping-explaination">
+<h2>Scraping Explaination<a class="headerlink" href="#scraping-explaination" title="Permalink to this headline">¶</a></h2>
+<p>Define the site as :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">INDEX</span> <span class="o">=</span> <span class="s1">&#39;https://dantri.com.vn/vaccine.tag&#39;</span>
+</pre></div>
+</div>
+<p>The scraper will be focused on three main functions <code class="docutils literal notranslate"><span class="pre">download()</span></code>, <code class="docutils literal notranslate"><span class="pre">scrape_images()</span></code> and <code class="docutils literal notranslate"><span class="pre">articles()</span></code>.</p>
+<div class="section" id="articles">
+<h3>articles()<a class="headerlink" href="#articles" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">articles</span><span class="p">(</span><span class="n">links</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Search for URLs contains &#39;vacxin&#39; in the given link.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
+        <span class="n">href</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">href</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">href</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">):</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">href</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://dantri.com.vn&#39;</span> <span class="o">+</span> <span class="n">href</span>
+        <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.htm&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;vac&#39;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">url</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> tags try to get the href attribute of each <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> tag. Since some <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> don’t have an href attribute, we will ignore if href returns None. To make href a recognized url, we add <code class="docutils literal notranslate"><span class="pre">http://dantri.com.vn</span></code> in advance href. If href start with <code class="docutils literal notranslate"><span class="pre">http</span></code>, we add url as href else we add url in advance href  .Finally, to get vaccine-relevant articles, we just get the end of the url with <code class="docutils literal notranslate"><span class="pre">.htm</span></code> and contains <code class="docutils literal notranslate"><span class="pre">vac</span></code>.</p>
+</div>
+<div class="section" id="download">
+<h3>download()<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">caption</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Save the given image with caption if it&#39;s about vaccine.&quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">dest</span> <span class="o">/</span> <span class="n">name</span>
+    <span class="k">await</span> <span class="n">directory</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">fi</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConnectTimeout</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="k">await</span> <span class="n">open_file</span><span class="p">(</span><span class="n">directory</span><span class="o">/</span><span class="sa">f</span><span class="s1">&#39;image</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fo</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">fi</span><span class="o">.</span><span class="n">aiter_bytes</span><span class="p">():</span> <span class="k">await</span> <span class="n">fo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+    <span class="k">await</span> <span class="p">(</span><span class="n">directory</span><span class="o">/</span><span class="s1">&#39;caption&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">caption</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">caption</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This code will download the image from <code class="docutils literal notranslate"><span class="pre">src</span></code> and the caption from <code class="docutils literal notranslate"><span class="pre">alt</span></code>. First I use <code class="docutils literal notranslate"><span class="pre">name,</span> <span class="pre">ext</span> <span class="pre">=</span> <span class="pre">splitext(basename(url))</span></code> to split url to find image name and extension. Then each image and its caption is then put in the same folder.</p>
+</div>
+<div class="section" id="scrape-images">
+<h3>scrape_images()<a class="headerlink" href="#scrape-images" title="Permalink to this headline">¶</a></h3>
+<p>First, I try to get url of article from client, except Connection is error then i show the url. The appropriate urls are then fetched and parsed in order to find all the <code class="docutils literal notranslate"><span class="pre">&lt;img&gt;</span></code> tags available as <em>vac</em> and <em>vắc</em>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="index.html">spider-venom</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="vnexpress.html">Scraping vaccine images from VnExpress</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuoitre.html">Scraping vaccine images from tuoitre</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thanhnien.html">Scraping vaccine images from thanhnien</a></li>
+<li class="toctree-l1"><a class="reference internal" href="display.html">Displaying the results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Scraped images and their captions</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/dantri.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
