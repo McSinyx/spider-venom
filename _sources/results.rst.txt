@@ -17,6 +17,10 @@ Scraped images and their captions
 
    .. include:: venom/thanhnien/tiem/caption
 
+.. figure:: venom/thanhnien/3_mgeh/image.jpg
+
+   .. include:: venom/thanhnien/3_mgeh/caption
+
 .. figure:: venom/thanhnien/vaccinecovid19_rpfg/image.jpg
 
    .. include:: venom/thanhnien/vaccinecovid19_rpfg/caption
